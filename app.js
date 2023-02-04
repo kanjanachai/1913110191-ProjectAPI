@@ -3,10 +3,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose');
+const config = require('./config/index')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+
 
 app.use(logger('dev'));
 app.use(express.json());
