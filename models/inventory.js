@@ -12,9 +12,9 @@ const inventorySchema = new Schema(
 );
 
 inventorySchema.virtual('invdetail', {
-    ref: 'inventory',
+    ref: 'invdetail',
     localField: '_id',
-    foreignField: 'invdetail'
+    foreignField: 'product'
 })
 
 const inventory = mongoose.model("inventory", inventorySchema);

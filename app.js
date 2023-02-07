@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 const mongoose = require('mongoose');
 const config = require('./config/index')
+const errorHandler = require('./middleware/errorHandler');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -25,4 +26,5 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/inventory', inventoryRouter);
 
+app.use(errorHandler);
 module.exports = app;
