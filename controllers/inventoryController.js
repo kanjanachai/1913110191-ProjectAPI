@@ -45,7 +45,7 @@ exports.insertDetail = async (req, res, next) => {
     }
   } catch (error) {
     res.status(400).json({
-      message:"asdasda"
+      message: "asdasda",
     });
   }
 };
@@ -53,36 +53,64 @@ exports.insertDetail = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const product = await Inventory.deleteOne({ _id: id });
-    const destoy = await Invdetail.deleteMany({product: id})
+    const pd = await Inventory.deleteOne({ _id: id });
+    await Invdetail.deleteMany({ product: id });
 
-    if (product.deletedCount === 0) {
+    if (pd.deletedCount === 0) {
       res.status(404).json({
-        message:"wwwwwwww"
-      })
+        message: "wwwwwwww",
+      });
     }
     res.status(200).json({
-      message:"pass"
-    })
-  } catch (error) {
-    
-  }
-}
+      message: "pass",
+    });
+  } catch (error) {}
+};
 
 exports.deleteDetail = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const product = await Invdetail.deleteOne({ _id: id });
+    const pd = await Invdetail.deleteOne({ _id: id });
 
-    if (product.deletedCount === 0) {
+    if (pd.deletedCount === 0) {
       res.status(404).json({
-        message:"wwwwwwww"
-      })
+        message: "wwwwwwww",
+      });
     }
     res.status(200).json({
-      message:"pass"
-    })
-  } catch (error) {
+      message: "pass",
+    });
+  } catch (error) {}
+};
+
+exports.updateProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { product } = req.body;
+    const inv = await Inventory.findById(id);
+    inv.product = product;
+    await inv.save();
     
+    res.status(200).json({
+      message: "แก้ไข้ข้อมูลเรียบร้อยแล้ว",
+    });
+  } catch (error) {
   }
-} 
+};
+
+exports.updateDetail = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { type, price, quantity } = req.body;
+    const inv = await Invdetail.findById(id);
+    inv.type = type;
+    inv.price = price;
+    inv.quantity = quantity;
+    await inv.save();
+
+    res.status(200).json({
+      message: "แก้ไข้ข้อมูลเรียบร้อยแล้ว",
+    });
+  } catch (error) {
+  }
+};
