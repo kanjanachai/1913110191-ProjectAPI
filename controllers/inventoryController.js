@@ -4,12 +4,6 @@ const Invdetail = require("../models/invdetail");
 exports.show = async (req, res, next) => {
   const inventory = await Inventory.find().populate("invdetail");
 
-  /*   formatInventory = inventory.map((inv, index) => {
-    return {
-        product: inv.product,
-    }
-  }) */
-
   res.status(200).json({
     data: inventory,
   });
@@ -55,3 +49,40 @@ exports.insertDetail = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Inventory.deleteOne({ _id: id });
+    const destoy = await Invdetail.deleteMany({product: id})
+
+    if (product.deletedCount === 0) {
+      res.status(404).json({
+        message:"wwwwwwww"
+      })
+    }
+    res.status(200).json({
+      message:"pass"
+    })
+  } catch (error) {
+    
+  }
+}
+
+exports.deleteDetail = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await Invdetail.deleteOne({ _id: id });
+
+    if (product.deletedCount === 0) {
+      res.status(404).json({
+        message:"wwwwwwww"
+      })
+    }
+    res.status(200).json({
+      message:"pass"
+    })
+  } catch (error) {
+    
+  }
+} 
