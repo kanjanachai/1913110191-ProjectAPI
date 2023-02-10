@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -8,12 +9,19 @@ const userSchema = new Schema(
     password: { type: String, require: true, trim: true, minlength: 5 },
     role: { type: String, default: "member" },
   },
-  {
-    toJSON: {virtuals: true},
-    timestamps: true,
-    collection: "users",
-  }
+  { collection: "users" }
 );
+
+userSchema.methods.encryptPassword = async function (password) {
+  const salt = await bcrypt.genSalt(5);
+  const hashPassword = await bcrypt.hash(password, salt);
+  return hashPassword;
+};
+
+userSchema.methods.checkPassword = async function (password) {
+  const isValid = await bcrypt.compare(password, this.password);
+  return isValid;
+};
 
 const user = mongoose.model("user", userSchema);
 

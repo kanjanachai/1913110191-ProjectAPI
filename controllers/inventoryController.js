@@ -1,12 +1,12 @@
 const Inventory = require("../models/inventory");
 const Invdetail = require("../models/invdetail");
-const { validationResult, body } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 // show all product
 exports.show = async (req, res, next) => {
   const inventory = await Inventory.find().populate("invdetail");
   res.status(200).json({
-    data: inventory,
+    data: inventory
   });
 };
 
