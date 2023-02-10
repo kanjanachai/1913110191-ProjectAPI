@@ -11,10 +11,12 @@ exports.show = async (req, res, next) => {
 exports.showOne = async (req, res, next) => {
   const { id } = req.params;
   const user = await User.findById(id);
-
-
   res.status(200).json({
-    data: user,
+    data: {
+      Name: user.name,
+      Email: user.email,
+      Role: user.role,
+    },
   });
 };
 
