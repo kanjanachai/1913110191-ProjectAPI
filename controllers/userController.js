@@ -11,14 +11,13 @@ exports.show = async (req, res, next) => {
 };
 
 exports.showOne = async (req, res, next) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
+  const { _id, name, email, role } = req.user;
   res.status(200).json({
     data: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
+      _id: _id,
+      name: name,
+      email: email,
+      role: role,
     },
   });
 };

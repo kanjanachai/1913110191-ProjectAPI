@@ -6,7 +6,7 @@ const invdetailSchema = new Schema(
     type: { type: String, require: true, trim: true },
     price: { type: Number },
     quantity: { type: Number },
-    product: { type: Schema.Types.ObjectId, ref: "inventory" },
+    product: { type: Schema.Types.ObjectId },
   },
   { collection: "invdetail" }
 );
