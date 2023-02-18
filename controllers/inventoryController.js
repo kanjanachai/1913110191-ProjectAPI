@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 
 // show all product
 exports.show = async (req, res, next) => {
-  const inventory = await Inventory.find().populate("invdetail");
+  const inventory = await Inventory.find().populate("invdetail", ['type', 'price', 'quantity']).select('product');
   res.status(200).json({
     data: inventory
   });
@@ -14,7 +14,7 @@ exports.show = async (req, res, next) => {
 exports.showOne = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const inventory = await Inventory.findById(id).populate("invdetail");
+    const inventory = await Inventory.findById(id).populate("invdetail", ['type', 'price', 'quantity']).select('product');
     if (!inventory) {
       const error = new Error("ไม่พบสินค้า");
       error.statusCode = 400;
