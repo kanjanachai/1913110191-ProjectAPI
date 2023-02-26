@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 const inventoryController = require('../controllers/inventoryController');
 const { body } = require('express-validator');
 const passportJWT = require('../middleware/passportJWT');
