@@ -13,6 +13,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var inventoryRouter = require('./routes/inventory')
 
+var cardRouter = require('./routes/card')
+
 var app = express();
 
 mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -29,6 +31,7 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/inventory', inventoryRouter);
+app.use('/card', cardRouter);
 
 app.use(errorHandler);
 module.exports = app;
